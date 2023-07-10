@@ -18,14 +18,15 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => AuthViewModel()),
-          ChangeNotifierProvider(create: (_) => UserViewModel())
+          ChangeNotifierProvider(create: (_) => UserViewModel()),
         ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        initialRoute: RoutesName.splash,
+        initialRoute: RoutesName.navigation,
         onGenerateRoute: Routes.generateRoute,
       ),
     );

@@ -59,7 +59,6 @@ class AuthViewModel with ChangeNotifier {
     });
   }
 
-
   Future<void> signUpApi(dynamic data , BuildContext context) async {
 
     setSignUpLoading(true);

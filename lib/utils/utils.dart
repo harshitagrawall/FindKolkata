@@ -5,6 +5,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class Utils {
 
+  static void removeFocus(BuildContext context){
+    FocusScope.of(context).unfocus();
+  }
 
   static double averageRating(List<int> rating){
     var avgRating = 0;
@@ -18,8 +21,6 @@ class Utils {
     current.unfocus();
     FocusScope.of(context).requestFocus(nextFocus);
   }
-
-
 
   static toastMessage(String message){
     Fluttertoast.showToast(
@@ -35,16 +36,16 @@ class Utils {
     showFlushbar(context: context,
         flushbar: Flushbar(
           forwardAnimationCurve:Curves.decelerate,
-          margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          padding: EdgeInsets.all(15),
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: const EdgeInsets.all(15),
           message: message,
-          duration: Duration(seconds: 3),
+          duration: const Duration(seconds: 3),
           borderRadius: BorderRadius.circular(8),
           flushbarPosition: FlushbarPosition.TOP,
           backgroundColor: Colors.red,
           reverseAnimationCurve: Curves.easeInOut,
           positionOffset: 20,
-          icon: Icon(Icons.error , size: 28 , color: Colors.white,),
+          icon: const Icon(Icons.error , size: 28 , color: Colors.white,),
         )..show(context),
 
     );

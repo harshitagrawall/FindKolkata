@@ -7,16 +7,18 @@ import 'package:mvvm/res/app_url.dart';
 class HomeRepository {
 
   // q=cleaning&area=rau
-
+  //
+  //
+  // +'q=$data'+'&area=$area
   var area,data;
 
   BaseApiServices _apiServices = NetworkApiService() ;
 
-  Future<ItemListModal> fetchHomeList(String data,String area)async{
+  Future<ItemListModal> fetchHomeList()async{
 
     try{
 
-      dynamic response = await _apiServices.getGetApiResponse(AppUrl.homeListUrl+'q=$data'+'&area=$area');
+      dynamic response = await _apiServices.getGetApiResponse(AppUrl.homeListUrl);
       // print(AppUrl.homeListUrl+'q=$data'+'&area=$area');
       return response = ItemListModal.fromJson(response);
 

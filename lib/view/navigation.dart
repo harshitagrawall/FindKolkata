@@ -46,13 +46,12 @@ class HomeState extends State<Home> {
             BottomNavigationBarItem(
               backgroundColor: Colors.deepOrangeAccent,
               label: 'T&C',
-              icon: Icon(Icons.search),
+              icon: Icon(Icons.book_online),
             ),
             BottomNavigationBarItem(
               backgroundColor: Colors.deepOrangeAccent,
               // activeIcon: ListView(),
               label: 'Privacy',
-
               icon: Icon(
                 Icons.card_travel,
               ),
@@ -60,7 +59,7 @@ class HomeState extends State<Home> {
             BottomNavigationBarItem(
               label: 'ABout Us',
               backgroundColor: Colors.deepOrangeAccent,
-              icon: Icon(Icons.menu),
+              icon: Icon(Icons.person),
             ),
           ],
           currentIndex: currentindex,

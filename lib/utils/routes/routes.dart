@@ -11,6 +11,8 @@ import 'package:mvvm/view/search_screen.dart';
 import 'package:mvvm/view/signp_view.dart';
 import 'package:mvvm/view/splash_view.dart';
 
+import '../../view/calling_demo.dart';
+
 class Routes {
 
   static Route<dynamic>  generateRoute(RouteSettings settings){
@@ -30,6 +32,10 @@ class Routes {
 
       case RoutesName.signUp:
         return MaterialPageRoute(builder: (BuildContext context) => const SignUpView());
+
+
+      case RoutesName.calling:
+        return MaterialPageRoute(builder: (BuildContext context) => const MyApp());
 
       default:
         return MaterialPageRoute(builder: (_){

@@ -13,6 +13,8 @@ class RoutesName {
 
   //home screen routes name
   static const String home = 'home_sceen' ;
+  static const String calling = 'Calling_Screen';
+  static const String share = 'Share_Screen';
 
 
 

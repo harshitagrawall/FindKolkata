@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:mvvm/view_model/services/splash_services.dart';
+import 'package:mvvm/utils/routes/routes_name.dart';
+
 
 
 class SplashView extends StatefulWidget {
@@ -11,20 +14,19 @@ class SplashView extends StatefulWidget {
 
 class _SplashViewState extends State<SplashView> {
 
-  SplashServices splashServices = SplashServices();
-
-  @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    splashServices.checkAuthentication(context);
+    Timer(Duration(seconds: 2), () {
+      Navigator.pushNamed(context,RoutesName.navigation);
+    });
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade300,
       body:Center(
-        child: Text('Splash screen', style: Theme.of(context).textTheme.headline4,),
+        child: Center(child: Image.asset('image/findKolkata.png')),
       ),
     );
   }

@@ -6,8 +6,8 @@ class DetailsModal {
   String? contactNumber;
   String? whatsappNumber;
   String? address;
-  String? serviceType;
-  String? coordinates;
+  String? banner;
+  List<String>? images;
 
   DetailsModal(
       {this.id,
@@ -17,8 +17,8 @@ class DetailsModal {
         this.contactNumber,
         this.whatsappNumber,
         this.address,
-        this.serviceType,
-        this.coordinates});
+        this.banner,
+        this.images});
 
   DetailsModal.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -28,8 +28,8 @@ class DetailsModal {
     contactNumber = json['contactNumber'];
     whatsappNumber = json['whatsappNumber'];
     address = json['address'];
-    serviceType = json['serviceType'];
-    coordinates = json['coordinates'];
+    banner = json['banner'];
+    images = json['images'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {
@@ -41,8 +41,8 @@ class DetailsModal {
     data['contactNumber'] = this.contactNumber;
     data['whatsappNumber'] = this.whatsappNumber;
     data['address'] = this.address;
-    data['serviceType'] = this.serviceType;
-    data['coordinates'] = this.coordinates;
+    data['banner'] = this.banner;
+    data['images'] = this.images;
     return data;
   }
 }

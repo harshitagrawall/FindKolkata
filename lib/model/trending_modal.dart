@@ -31,6 +31,7 @@ class Listings {
   String? address;
   String? serviceType;
   String? coordinates;
+  String? banner;
 
   Listings(
       {this.id,
@@ -41,7 +42,8 @@ class Listings {
         this.whatsappNumber,
         this.address,
         this.serviceType,
-        this.coordinates});
+        this.coordinates,
+        this.banner});
 
   Listings.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -53,6 +55,7 @@ class Listings {
     address = json['address'];
     serviceType = json['serviceType'];
     coordinates = json['coordinates'];
+    banner = json['banner'];
   }
 
   Map<String, dynamic> toJson() {
@@ -66,6 +69,7 @@ class Listings {
     data['address'] = this.address;
     data['serviceType'] = this.serviceType;
     data['coordinates'] = this.coordinates;
+    data['banner'] = this.banner;
     return data;
   }
 }

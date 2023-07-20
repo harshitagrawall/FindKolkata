@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:mvvm/data/response/status.dart';
 import 'package:mvvm/view_model/details_view_modal.dart';
 import 'package:provider/provider.dart';
-
+import 'package:share_plus/share.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailsScreen extends StatefulWidget {
   var id;
-  DetailsScreen({Key? key,required this.id}) : super(key: key);
+
+  DetailsScreen({Key? key, required this.id}) : super(key: key);
 
   @override
   State<DetailsScreen> createState() => _DetailsScreenState();
@@ -14,6 +17,14 @@ class DetailsScreen extends StatefulWidget {
 
 class _DetailsScreenState extends State<DetailsScreen> {
   DetailsViewViewModal detailsViewViewModal = DetailsViewViewModal();
+
+  Uri dialNumber = Uri(scheme: 'tel', path: '+918815672860');
+
+  //
+  // callNumber()async{
+  //   await launch(dialNumber);
+  //
+  // }
 
   @override
   void initState() {
@@ -25,7 +36,12 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var device_size,height,width;
+    void sendWhattsApp() {
+      String url = "whatsapp://send?phone=+917748866267&text=hello";
+      launch(url);
+    }
+
+    var device_size, height, width;
     device_size = MediaQuery.of(context).size;
     height = device_size.height;
     width = device_size.width;
@@ -46,18 +62,19 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: width*.075,
+                      height: width * .075,
                     ),
                     Container(
-                      height: width*.49,
+                      height: width * .49,
                       width: double.infinity,
                       child: Image.asset('image/findKolkata.png',
                           fit: BoxFit.contain),
                     ),
                     SizedBox(
-                      height: width*.005,
+                      height: width * .005,
                     ),
                     Text(
+                      // 'hello',
                       value.detailsList.data!.name.toString(),
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
@@ -67,6 +84,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       height: 5,
                     ),
                     Text(
+                      // 'hello',
                       value.detailsList.data!.areaName.toString(),
                       style: TextStyle(fontWeight: FontWeight.w300),
                     ),
@@ -107,31 +125,40 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       ],
                     ),
                     SizedBox(
-                      height: width*.085,
+                      height: width * .085,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        CircleAvatar(
-                          backgroundColor: Colors.grey,
-                          radius: 25.5,
-                          child: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: 25,
-                            child: Icon(Icons.call),
-                          ),
-                        ),
-                        CircleAvatar(
-                          backgroundColor: Colors.grey,
-                          radius: 25.5,
-                          child: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: 25,
-                            child: Icon(Icons.location_on),
-                          ),
-                        ),
                         GestureDetector(
-                          onTap: (){},
+                          onTap: () async {
+                            FlutterPhoneDirectCaller.callNumber(value
+                                .detailsList.data!.contactNumber
+                                .toString());
+                          },
+                          child: CircleAvatar(
+                            backgroundColor: Colors.grey,
+                            radius: 25.5,
+                            child: CircleAvatar(
+                              backgroundColor: Colors.white,
+                              radius: 25,
+                              child: Icon(Icons.call),
+                            ),
+                          ),
+                        ),
+                        // CircleAvatar(
+                        //   backgroundColor: Colors.grey,
+                        //   radius: 25.5,
+                        //   child: CircleAvatar(
+                        //     backgroundColor: Colors.white,
+                        //     radius: 25,
+                        //     child: Icon(Icons.location_on),
+                        //   ),
+                        // ),
+                        GestureDetector(
+                          onTap: () {
+                            sendWhattsApp();
+                          },
                           child: CircleAvatar(
                             backgroundColor: Colors.grey,
                             radius: 25.5,
@@ -141,19 +168,24 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             ),
                           ),
                         ),
-                        CircleAvatar(
-                          backgroundColor: Colors.grey,
-                          radius: 25.5,
+                        GestureDetector(
+                          onTap: () {
+                            Share.share('com.example.mvvm');
+                          },
                           child: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: 25,
-                            child: Icon(Icons.share),
+                            backgroundColor: Colors.grey,
+                            radius: 25.5,
+                            child: CircleAvatar(
+                              backgroundColor: Colors.white,
+                              radius: 25,
+                              child: Icon(Icons.share),
+                            ),
                           ),
                         ),
                       ],
                     ),
                     SizedBox(
-                      height: width*.1,
+                      height: width * .1,
                     ),
                     Container(
                       height: .5,
@@ -161,7 +193,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       color: Colors.grey.shade300,
                     ),
                     SizedBox(
-                      height: width*.05,
+                      height: width * .05,
                     ),
                     Text(
                       'Photos',
@@ -176,13 +208,28 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         Padding(
                           padding: const EdgeInsets.only(right: 15),
                           child: Container(
+                              decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: Colors.grey, width: .5),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              height: width * .195,
+                              width: width * .195,
+                              child: Image.network(
+                                  value.detailsList.data!.images![0].toString(),
+                                  fit: BoxFit.contain)),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 15),
+                          child: Container(
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.grey, width: .5),
                               borderRadius: BorderRadius.circular(5),
                             ),
-                            height: width*.195,
-                            width: width*.195,
-                            child: Image.asset('image/findKolkata.png',
+                            height: width * .195,
+                            width: width * .195,
+                            child: Image.network(
+                                value.detailsList.data!.images![0].toString(),
                                 fit: BoxFit.contain),
                           ),
                         ),
@@ -193,9 +240,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               border: Border.all(color: Colors.grey, width: .5),
                               borderRadius: BorderRadius.circular(5),
                             ),
-                            height: width*.195,
-                            width: width*.195,
-                            child: Image.asset('image/findKolkata.png',
+                            height: width * .195,
+                            width: width * .195,
+                            child: Image.network(
+                                value.detailsList.data!.images![0].toString(),
                                 fit: BoxFit.contain),
                           ),
                         ),
@@ -206,29 +254,17 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               border: Border.all(color: Colors.grey, width: .5),
                               borderRadius: BorderRadius.circular(5),
                             ),
-                            height: width*.195,
-                            width: width*.195,
-                            child: Image.asset('image/findKolkata.png',
-                                fit: BoxFit.contain),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 15),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey, width: .5),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            height: width*.195,
-                            width: width*.195,
-                            child: Image.asset('image/findKolkata.png',
+                            height: width * .195,
+                            width: width * .195,
+                            child: Image.asset(
+                                value.detailsList.data!.images![0].toString(),
                                 fit: BoxFit.contain),
                           ),
                         ),
                       ],
                     ),
                     SizedBox(
-                      height: width*.05,
+                      height: width * .05,
                     ),
                     Container(
                       height: .5,
@@ -236,11 +272,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       color: Colors.grey.shade300,
                     ),
                     SizedBox(
-                      height: width*.05,
+                      height: width * .05,
                     ),
                     Container(
                       width: double.infinity,
-                      height: width*.195,
+                      height: width * .195,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -250,7 +286,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             children: [
                               Flexible(
                                   child: Text(
-                                      value.detailsList.data!.address.toString(),
+                                      value.detailsList.data!.address
+                                          .toString(),
                                       overflow: TextOverflow.ellipsis,
                                       softWrap: false)),
                               SizedBox(
@@ -277,15 +314,15 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 horizontal: 10, vertical: 10),
                             child: Image(
                                 image: AssetImage('image/googleMap.jpeg'),
-                                height: width*.22,
-                                width: width*.195,
+                                height: width * .22,
+                                width: width * .195,
                                 fit: BoxFit.contain),
                           ),
                         ],
                       ),
                     ),
                     SizedBox(
-                      height: width*.05,
+                      height: width * .05,
                     ),
                     Container(
                       height: .5,
@@ -293,20 +330,22 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       color: Colors.grey.shade300,
                     ),
                     Container(
-                      height: width*.12,
+                      height: width * .12,
                       width: double.infinity,
                       child: Row(
                         children: [
                           Icon(Icons.call_outlined),
                           Padding(
                             padding: const EdgeInsets.only(left: 5),
-                            child: Text(   value.detailsList.data!.contactNumber.toString(),),
+                            child: Text(
+                              value.detailsList.data!.contactNumber.toString(),
+                            ),
                           ),
                         ],
                       ),
                     ),
                     SizedBox(
-                      height: width*.05,
+                      height: width * .05,
                     ),
                     Container(
                       height: .5,

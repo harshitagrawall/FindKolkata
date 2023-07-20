@@ -14,12 +14,13 @@ class HomeViewViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  // String data,String area
 
-  Future<void> fetchHomeListApi (String data,String area)async{
+  Future<void> fetchHomeListApi ()async{
 
     setHomeList(ApiResponse.loading());
 
-    _myRepo.fetchHomeList(data,area).then((value){
+    _myRepo.fetchHomeList().then((value){
 
       setHomeList(ApiResponse.completed(value));
 

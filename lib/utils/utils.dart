@@ -27,7 +27,6 @@ class Utils {
         msg: message,
     backgroundColor: Colors.black,
       textColor: Colors.white,
-
     );
   }
 

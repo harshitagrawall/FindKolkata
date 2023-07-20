@@ -29,18 +29,14 @@ class _AboutUsState extends State<AboutUs> {
       ),
     )
     ..loadRequest(Uri.parse('https://flutter.dev'));
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text('AboutUs'),
+        body: Center(
+      child: WebViewWidget(
+        controller: _controller,
       ),
-      body: Center(
-        child:  WebViewWidget(
-          controller: _controller,
-        ),
-      )
-    );
+    ));
   }
 }

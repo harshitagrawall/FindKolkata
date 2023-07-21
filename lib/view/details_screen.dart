@@ -42,7 +42,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
     }
 
     var device_size, height, width;
-    device_size = MediaQuery.of(context).size;
+    device_size = MediaQuery
+        .of(context)
+        .size;
     height = device_size.height;
     width = device_size.width;
     return Scaffold(
@@ -77,7 +79,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       // 'hello',
                       value.detailsList.data!.name.toString(),
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
                       overflow: TextOverflow.ellipsis,
                     ),
                     SizedBox(
@@ -198,7 +200,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     Text(
                       'Photos',
                       style:
-                          TextStyle(fontWeight: FontWeight.w400, fontSize: 20),
+                      TextStyle(fontWeight: FontWeight.w400, fontSize: 20),
                     ),
                     SizedBox(
                       height: 5,
@@ -210,7 +212,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           child: Container(
                               decoration: BoxDecoration(
                                 border:
-                                    Border.all(color: Colors.grey, width: .5),
+                                Border.all(color: Colors.grey, width: .5),
                                 borderRadius: BorderRadius.circular(5),
                               ),
                               height: width * .195,
@@ -286,10 +288,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             children: [
                               Flexible(
                                   child: Text(
-                                      value.detailsList.data!.address
-                                          .toString(),
-                                      overflow: TextOverflow.ellipsis,
-                                      softWrap: false)),
+                                   'Vijay nagar Indore',
+                                    overflow: TextOverflow.ellipsis,
+                                  )),
                               SizedBox(
                                 height: 10,
                               ),

@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:mvvm/data/response/status.dart';
 import 'package:mvvm/utils/routes/routes_name.dart';
 import 'package:mvvm/view/home_screen.dart';
@@ -17,50 +14,24 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  List data = [];
-  int _value = 1;
 
-  getData() async {
-    final res =
-        await http.get(Uri.parse('https://findkolkata.com/api/getAllArea.php'));
-    data = jsonDecode(res.body);
-    setState(() {});
-  }
+  String? _selValue ;
 
   final TextEditingController _texfieldController = TextEditingController();
-  TrendingListViewViewModal trendingListViewViewModal =
-      TrendingListViewViewModal();
-  DropDownListViewViewModal dropDownListViewViewModal =
-      DropDownListViewViewModal();
+  TrendingListViewViewModal trendingListViewViewModal = TrendingListViewViewModal();
+  DropDownListViewViewModal dropDownListViewViewModal = DropDownListViewViewModal();
 
   @override
   void initState() {
     // TODO: implement initState
     trendingListViewViewModal.fetchTrendingListApi();
     dropDownListViewViewModal.fetchDropDownItemList();
+    _selValue = 'Kolkata';
     super.initState();
   }
 
-  final listItem = [
-    'Please Select',
-    'pardeshipura',
-    'Rau',
-    'vijay nagar',
-    'Indore',
-    'L.I.G',
-    'Palasia',
-    '56 Dukaan',
-    'Holker Staidum',
-  ];
-
-  // listItem = dropDownListViewViewModal.dropDownList.data!.areas!.toList();
-
-  String? _selValue = 'Please Select';
-  FocusNode _selvalueFocus = FocusNode();
-
   @override
   Widget build(BuildContext context) {
-    getData();
     var device_size, width;
     device_size = MediaQuery.of(context).size;
     width = device_size.width;
@@ -108,18 +79,61 @@ class _SearchScreenState extends State<SearchScreen> {
               height: width * .099,
               width: width * .61,
               // Set the desired height for the dropdown button
-              child: DropdownButton(
-                items: data.map((e) {
-                  return DropdownMenuItem(
-                    child: Text(e),
-                    value: e,
-                  );
-                }).toList(),
-                value: _value,
-                onChanged: (v) {
-                  _value = v as int;
-                },
+              child: ChangeNotifierProvider<DropDownListViewViewModal>(
+                create: (BuildContext context) => dropDownListViewViewModal,
+                child: Consumer<DropDownListViewViewModal>(
+                    builder: (context, valuee, _) {
+                  switch (valuee.dropDownList.status) {
+                    case Status.LOADING:
+                      return Center(child: CircularProgressIndicator());
+                    case Status.ERROR:
+                      return Center(
+                          child: Text(valuee.dropDownList.message.toString()));
+                    case Status.COMPLETED:
+                      return DropdownButtonFormField<String>(
+                        value: _selValue!.isNotEmpty ? _selValue : null ,
+                        onChanged: (val) {
+                          setState(() {
+                            _selValue = val as String;
+                          });
+                        },
+                        items: valuee.dropDownList.data!.areas!
+                            .map((e) => DropdownMenuItem(
+                                  child: Text(
+                                    e,
+                                    style: TextStyle(fontSize: 13),
+                                  ),
+                                  value: e,
+                                ))
+                            .toList(),
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                          filled: true,
+                          fillColor: Colors.grey.shade200,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(30),
+                            ),
+                          ),
+                        ),
+                      );
+                  }
+                  return Container();
+                }),
               ),
+
+              // DropdownButton(
+              //   items: listItem.map((e) {
+              //     return DropdownMenuItem(
+              //       child: Text(e),
+              //       value: e,
+              //     );
+              //   }).toList(),
+              //   value: _value,
+              //   onChanged: (v) {
+              //     _value = v as int;
+              //   },
+              // ),
               // decoration: BoxDecoration(
               //   contentPadding: EdgeInsets.symmetric(horizontal: 16),
               //       filled: true,
@@ -131,35 +145,6 @@ class _SearchScreenState extends State<SearchScreen> {
               //       ),
               //     ),
             ),
-
-            // DropdownButtonFormField<String>(
-            //   value: _selValue,
-            //   onChanged: (val) {
-            //     setState(() {
-            //       _selValue = val as String;
-            //     });
-            //   },
-            //   items: listItem
-            //       .map((e) => DropdownMenuItem(
-            //     child: Text(
-            //       e,
-            //       style: TextStyle(fontSize: 13),
-            //     ),
-            //     value: e,
-            //   ))
-            //       .toList(),
-            //   decoration: InputDecoration(
-            //     contentPadding: EdgeInsets.symmetric(horizontal: 16),
-            //     filled: true,
-            //     fillColor: Colors.grey.shade200,
-            //     border: OutlineInputBorder(
-            //       borderRadius: BorderRadius.all(
-            //         Radius.circular(30),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-
             SizedBox(
               height: width * .099,
             ),
@@ -245,8 +230,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                     child: Row(
                                       children: [
                                         Image.network(
-                                          'https://picsum.photos/250?image=9',
-                                          // value.trendingList.data!.listings[index].banner.toString(),
+                                           value.trendingList.data!.listings![index].banner.toString(),
                                           errorBuilder:
                                               (context, error, stack) {
                                             return Icon(
@@ -286,7 +270,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                                 height: 5,
                                               ),
                                               Text(
-                                                'Vijay Nagar, Indore',
+                                                value.trendingList.data!
+                                                    .listings![index].address
+                                                    .toString(),
                                                 style: TextStyle(
                                                     fontWeight:
                                                         FontWeight.bold),

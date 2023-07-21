@@ -6,7 +6,7 @@ import 'package:mvvm/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
-  var data,area;
+  var data, area;
 
   HomeScreen({Key? key, required this.data, required this.area})
       : super(key: key);
@@ -21,8 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    homeViewViewModel.fetchHomeListApi();
-    // print('hello${widget.area}+${widget.data}');
+    homeViewViewModel.fetchHomeListApi(widget.data, widget.area);
     super.initState();
   }
 
@@ -34,26 +33,38 @@ class _HomeScreenState extends State<HomeScreen> {
     width = device_size.width;
     final userPrefernece = Provider.of<UserViewModel>(context);
     return Scaffold(
-      // appBar: AppBar(
-      //   automaticallyImplyLeading: false,
-      //   actions: [
-      //     InkWell(
-      //         onTap: () {
-      //           userPrefernece.remove().then((value) {
-      //             Navigator.pushNamed(context, RoutesName.login);
-      //           });
-      //         },
-      //         child: Center(child: Text('Logout'))),
-      //     SizedBox(
-      //       width: 20,
-      //     )
-      //   ],
-      // ),
-      body: Column(
+        // appBar: AppBar(
+        //   automaticallyImplyLeading: false,
+        //   actions: [
+        //     InkWell(
+        //         onTap: () {
+        //           userPrefernece.remove().then((value) {
+        //             Navigator.pushNamed(context, RoutesName.login);
+        //           });
+        //         },
+        //         child: Center(child: Text('Logout'))),
+        //     SizedBox(
+        //       width: 20,
+        //     )
+        //   ],
+        // ),
+        body: SingleChildScrollView(
+      child: Column(
         children: [
+          SizedBox(
+            height: 20,
+          ),
           Container(
-            height: width*.48,
+            height: width * .32,
             child: Image.asset('image/findKolkata.png'),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            height: .5,
+            width: double.infinity,
+            color: Colors.grey.shade300,
           ),
           ChangeNotifierProvider<HomeViewViewModel>(
             create: (BuildContext context) => homeViewViewModel,
@@ -64,201 +75,223 @@ class _HomeScreenState extends State<HomeScreen> {
                 case Status.ERROR:
                   return Center(child: Text(value.homeList.message.toString()));
                 case Status.COMPLETED:
-                  return ListView.builder(
-                      itemCount: value.homeList.data!.listings!.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: width * .05, vertical: 5),
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => DetailsScreen(
-                                          id: value
-                                              .homeList.data!.listings![index].id
-                                              .toString())));
-                            },
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: width * .48,
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            child: Image.network(
-                                              value.homeList.data!.listings![index].banner.toString(),
-                                              errorBuilder:
-                                                  (context, error, stack) {
-                                                return Icon(
-                                                  Icons.error,
-                                                  color: Colors.red,
-                                                );
-                                              },
-                                              height: width * .27,
-                                              width: width * .17,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                            const EdgeInsets.only(left: 10),
-                                            child: Column(
-                                              crossAxisAlignment:
+                  return SingleChildScrollView(
+                    child: ListView.builder(
+                        itemCount: value.homeList.data!.listings!.length,
+                        physics: const NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: width * .05, vertical: 5),
+                            child: InkWell(
+                              onTap: () {
+                                print(value
+                                    .homeList.data!.listings![index].banner
+                                    .toString());
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => DetailsScreen(
+                                            id: value.homeList.data!
+                                                .listings![index].id
+                                                .toString())));
+                              },
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: width * .48,
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          crossAxisAlignment:
                                               CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  value.homeList.data!.listings![0]
-                                                      .name
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                      fontWeight: FontWeight.bold),
-                                                ),
-                                                SizedBox(
-                                                  height: 5,
-                                                ),
-                                                SizedBox(
-                                                  height: width * .06,
-                                                  width: width * .11,
-                                                  child: TextButton(
-                                                    style: ButtonStyle(
-                                                      backgroundColor:
-                                                      MaterialStateProperty
-                                                          .all<Color>(Colors
-                                                          .green.shade900),
-                                                      foregroundColor:
-                                                      MaterialStateProperty.all<
-                                                          Color>(Colors.white),
-                                                    ),
-                                                    onPressed: () {},
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                      children: [
-                                                        Text(
-                                                          '5.0',
-                                                          style: TextStyle(
-                                                              fontSize: 10,
-                                                              fontWeight:
-                                                              FontWeight.bold),
-                                                        ),
-                                                        Icon(
-                                                          Icons.star,
-                                                          size: 12,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 5,
-                                                ),
-                                                Text(
-                                                  'Vijay Nagar, Indore',
-                                                  style: TextStyle(
-                                                      color: Colors.grey,
-                                                      fontSize: 13),
-                                                ),
-                                                SizedBox(
-                                                  height: 5,
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Text(
-                                                      'Service Type:  ',
-                                                      style:
-                                                      TextStyle(fontSize: 12),
-                                                    ),
-                                                    Text('Home Cleaning',
-                                                        style: TextStyle(
-                                                            fontSize: 12,
-                                                            color: Colors.grey)),
-                                                  ],
-                                                )
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: width * .075,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          SizedBox(
-                                            width: width * .44,
-                                            height: width * .075,
-                                            child: TextButton(
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                MaterialStateProperty.all<
-                                                    Color>(Colors.blue),
-                                                foregroundColor:
-                                                MaterialStateProperty.all<
-                                                    Color>(Colors.white),
+                                          children: [
+                                            Container(
+                                              child: Image.network(
+                                                value.homeList.data!
+                                                    .listings![index].banner
+                                                    .toString(),
+                                                errorBuilder:
+                                                    (context, error, stack) {
+                                                  return Icon(
+                                                    Icons.error,
+                                                    color: Colors.red,
+                                                  );
+                                                },
+                                                height: width * .27,
+                                                width: width * .17,
+                                                fit: BoxFit.cover,
                                               ),
-                                              onPressed: () {},
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
-                                                  Icon(
-                                                    Icons.call,
-                                                    size: 17,
+                                                  Text(
+                                                    value.homeList.data!
+                                                        .listings![0].name
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
                                                   ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(
-                                                        left: 5),
-                                                    child: Text('Call Now'),
+                                                  SizedBox(
+                                                    height: 5,
                                                   ),
+                                                  SizedBox(
+                                                    height: width * .06,
+                                                    width: width * .11,
+                                                    child: TextButton(
+                                                      style: ButtonStyle(
+                                                        backgroundColor:
+                                                            MaterialStateProperty
+                                                                .all<Color>(Colors
+                                                                    .green
+                                                                    .shade900),
+                                                        foregroundColor:
+                                                            MaterialStateProperty
+                                                                .all<Color>(
+                                                                    Colors
+                                                                        .white),
+                                                      ),
+                                                      onPressed: () {},
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            '5.0',
+                                                            style: TextStyle(
+                                                                fontSize: 10,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          Icon(
+                                                            Icons.star,
+                                                            size: 12,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Text(
+                                                    'Vijay Nagar, Indore',
+                                                    style: TextStyle(
+                                                        color: Colors.grey,
+                                                        fontSize: 13),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        'Service Type:  ',
+                                                        style: TextStyle(
+                                                            fontSize: 12),
+                                                      ),
+                                                      Text('Home Cleaning',
+                                                          style: TextStyle(
+                                                              fontSize: 12,
+                                                              color:
+                                                                  Colors.grey)),
+                                                    ],
+                                                  )
                                                 ],
                                               ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: width * .44,
-                                            height: width * .075,
-                                            child: OutlinedButton(
-                                              style: OutlinedButton.styleFrom(
-                                                side: BorderSide(
-                                                    width: 1.0, color: Colors.blue),
+                                            )
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: width * .075,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            SizedBox(
+                                              width: width * .44,
+                                              height: width * .075,
+                                              child: TextButton(
+                                                style: ButtonStyle(
+                                                  backgroundColor:
+                                                      MaterialStateProperty.all<
+                                                          Color>(Colors.blue),
+                                                  foregroundColor:
+                                                      MaterialStateProperty.all<
+                                                          Color>(Colors.white),
+                                                ),
+                                                onPressed: () {},
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Icon(
+                                                      Icons.call,
+                                                      size: 17,
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 5),
+                                                      child: Text('Call Now'),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
-                                              onPressed: () {},
-                                              child: Text('Send Enquiry'),
                                             ),
-                                          )
-                                        ],
-                                      ),
-                                    ],
+                                            SizedBox(
+                                              width: width * .44,
+                                              height: width * .075,
+                                              child: OutlinedButton(
+                                                style: OutlinedButton.styleFrom(
+                                                  side: BorderSide(
+                                                      width: 1.0,
+                                                      color: Colors.blue),
+                                                ),
+                                                onPressed: () {},
+                                                child: Text('Send Enquiry'),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: width*.07,
+                                        ),
+                                        Container(
+                                          height: .5,
+                                          width: double.infinity,
+                                          color: Colors.grey.shade300,
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                Container(
-                                  height: 1.5,
-                                  width: double.infinity,
-                                  color: Colors.grey.shade300,
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      });
+                          );
+                        }),
+                  );
               }
               return Container();
             }),
           ),
           Container(
-            height: width*.48,
+            height: width * .32,
             child: Image.asset('image/findKolkata.png'),
           ),
         ],
-      )
-    );
+      ),
+    ));
   }
 }

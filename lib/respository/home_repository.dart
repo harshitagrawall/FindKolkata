@@ -14,11 +14,11 @@ class HomeRepository {
 
   BaseApiServices _apiServices = NetworkApiService() ;
 
-  Future<ItemListModal> fetchHomeList()async{
+  Future<ItemListModal> fetchHomeList(String data,String area)async{
 
     try{
 
-      dynamic response = await _apiServices.getGetApiResponse(AppUrl.homeListUrl);
+      dynamic response = await _apiServices.getGetApiResponse(AppUrl.homeListUrl+'q=$data&area=$area');
       // print(AppUrl.homeListUrl+'q=$data'+'&area=$area');
       return response = ItemListModal.fromJson(response);
 

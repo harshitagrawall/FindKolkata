@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemBuilder: (context, index) {
                           return Padding(
                             padding: EdgeInsets.symmetric(
-                                horizontal: width * .05, vertical: 5),
+                                horizontal: width * .05),
                             child: InkWell(
                               onTap: () {
                                 print(value
@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Column(
                                 children: [
                                   Container(
-                                    height: width * .48,
+                                    height: width * .50,
                                     child: Column(
                                       children: [
                                         Row(
@@ -128,92 +128,96 @@ class _HomeScreenState extends State<HomeScreen> {
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 10),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    value.homeList.data!
-                                                        .listings![0].name
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 5,
-                                                  ),
-                                                  SizedBox(
-                                                    height: width * .06,
-                                                    width: width * .11,
-                                                    child: TextButton(
-                                                      style: ButtonStyle(
-                                                        backgroundColor:
-                                                            MaterialStateProperty
-                                                                .all<Color>(Colors
-                                                                    .green
-                                                                    .shade900),
-                                                        foregroundColor:
-                                                            MaterialStateProperty
-                                                                .all<Color>(
-                                                                    Colors
-                                                                        .white),
-                                                      ),
-                                                      onPressed: () {},
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            '5.0',
-                                                            style: TextStyle(
-                                                                fontSize: 10,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                          Icon(
-                                                            Icons.star,
-                                                            size: 12,
-                                                          ),
-                                                        ],
+                                              child: Container(
+                                                width: width*.7,
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      value.homeList.data!
+                                                          .listings![index].name
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 8,
+                                                    ),
+                                                    SizedBox(
+                                                      height: width * .06,
+                                                      width: width * .11,
+                                                      child: TextButton(
+                                                        style: ButtonStyle(
+                                                          backgroundColor:
+                                                              MaterialStateProperty
+                                                                  .all<Color>(Colors
+                                                                      .green
+                                                                      .shade900),
+                                                          foregroundColor:
+                                                              MaterialStateProperty
+                                                                  .all<Color>(
+                                                                      Colors
+                                                                          .white),
+                                                        ),
+                                                        onPressed: () {},
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              '5.0',
+                                                              style: TextStyle(
+                                                                  fontSize: 10,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                            Icon(
+                                                              Icons.star,
+                                                              size: 12,
+                                                            ),
+                                                          ],
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 5,
-                                                  ),
-                                                  Text(
-                                                    'Vijay Nagar, Indore',
-                                                    style: TextStyle(
-                                                        color: Colors.grey,
-                                                        fontSize: 13),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 5,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        'Service Type:  ',
-                                                        style: TextStyle(
-                                                            fontSize: 12),
-                                                      ),
-                                                      Text('Home Cleaning',
-                                                          style: TextStyle(
-                                                              fontSize: 12,
-                                                              color:
-                                                                  Colors.grey)),
-                                                    ],
-                                                  )
-                                                ],
+                                                    SizedBox(
+                                                      height: 8,
+                                                    ),
+                                                    Text(
+                                                    value.homeList.data!.listings![index].address.toString(),
+                                                      overflow: TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                          color: Colors.grey,
+                                                          fontSize: 13),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    // Row(
+                                                    //   children: [
+                                                    //     Text(
+                                                    //       'Service Type:  ',
+                                                    //       style: TextStyle(
+                                                    //           fontSize: 12),
+                                                    //     ),
+                                                    //     Text('Home Cleaning',
+                                                    //         style: TextStyle(
+                                                    //             fontSize: 12,
+                                                    //             color:
+                                                    //                 Colors.grey)),
+                                                    //   ],
+                                                    // )
+                                                  ],
+                                                ),
                                               ),
                                             )
                                           ],
                                         ),
                                         SizedBox(
-                                          height: width * .075,
+                                          height: width * .07,
                                         ),
                                         Row(
                                           mainAxisAlignment:
@@ -266,7 +270,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ],
                                         ),
                                         SizedBox(
-                                          height: width*.07,
+                                          height: width * .07,
                                         ),
                                         Container(
                                           height: .5,
@@ -289,6 +293,14 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             height: width * .32,
             child: Image.asset('image/findKolkata.png'),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            height: .5,
+            width: double.infinity,
+            color: Colors.grey.shade300,
           ),
         ],
       ),

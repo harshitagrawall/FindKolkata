@@ -18,8 +18,6 @@ class DetailsScreen extends StatefulWidget {
 class _DetailsScreenState extends State<DetailsScreen> {
   DetailsViewViewModal detailsViewViewModal = DetailsViewViewModal();
 
-  Uri dialNumber = Uri(scheme: 'tel', path: '+918815672860');
-
   //
   // callNumber()async{
   //   await launch(dialNumber);
@@ -42,9 +40,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
     }
 
     var device_size, height, width;
-    device_size = MediaQuery
-        .of(context)
-        .size;
+    device_size = MediaQuery.of(context).size;
     height = device_size.height;
     width = device_size.width;
     return Scaffold(
@@ -69,8 +65,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     Container(
                       height: width * .49,
                       width: double.infinity,
-                      child: Image.asset('image/findKolkata.png',
-                          fit: BoxFit.contain),
+                      child: Image.network(
+                        value.detailsList.data!.banner.toString(),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                     SizedBox(
                       height: width * .005,
@@ -79,7 +77,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       // 'hello',
                       value.detailsList.data!.name.toString(),
                       style:
-                      TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
                       overflow: TextOverflow.ellipsis,
                     ),
                     SizedBox(
@@ -159,7 +157,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         // ),
                         GestureDetector(
                           onTap: () {
-                            sendWhattsApp();
+                            String url =
+                                "whatsapp://send?phone=+91${value.detailsList.data!.contactNumber.toString()}";
+                            launch(url);
+                            // sendWhattsApp();
                           },
                           child: CircleAvatar(
                             backgroundColor: Colors.grey,
@@ -200,7 +201,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     Text(
                       'Photos',
                       style:
-                      TextStyle(fontWeight: FontWeight.w400, fontSize: 20),
+                          TextStyle(fontWeight: FontWeight.w400, fontSize: 20),
                     ),
                     SizedBox(
                       height: 5,
@@ -212,14 +213,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           child: Container(
                               decoration: BoxDecoration(
                                 border:
-                                Border.all(color: Colors.grey, width: .5),
+                                    Border.all(color: Colors.grey, width: .5),
                                 borderRadius: BorderRadius.circular(5),
                               ),
                               height: width * .195,
                               width: width * .195,
                               child: Image.network(
                                   value.detailsList.data!.images![0].toString(),
-                                  fit: BoxFit.contain)),
+                                  fit: BoxFit.cover)),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(right: 15),
@@ -232,7 +233,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             width: width * .195,
                             child: Image.network(
                                 value.detailsList.data!.images![0].toString(),
-                                fit: BoxFit.contain),
+                                fit: BoxFit.cover),
                           ),
                         ),
                         Padding(
@@ -246,7 +247,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             width: width * .195,
                             child: Image.network(
                                 value.detailsList.data!.images![0].toString(),
-                                fit: BoxFit.contain),
+                                fit: BoxFit.cover),
                           ),
                         ),
                         Padding(
@@ -260,7 +261,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             width: width * .195,
                             child: Image.asset(
                                 value.detailsList.data!.images![0].toString(),
-                                fit: BoxFit.contain),
+                                fit: BoxFit.cover),
                           ),
                         ),
                       ],
@@ -279,46 +280,31 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     Container(
                       width: double.infinity,
                       height: width * .195,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
+                          Flexible(
+                              child: Text(
+                            value.detailsList.data!.address.toString(),
+                            overflow: TextOverflow.visible,
+                          )),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
                             children: [
-                              Flexible(
-                                  child: Text(
-                                   'Vijay nagar Indore',
-                                    overflow: TextOverflow.ellipsis,
-                                  )),
-                              SizedBox(
-                                height: 10,
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8),
+                                child: Icon(Icons.copy, size: 15),
                               ),
-                              Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: Icon(Icons.copy, size: 15),
-                                  ),
-                                  Text(
-                                    'Copy Adress',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w300,
-                                        fontSize: 10),
-                                  ),
-                                ],
-                              )
+                              Text(
+                                'Copy Adress',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w300, fontSize: 10),
+                              ),
                             ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 10),
-                            child: Image(
-                                image: AssetImage('image/googleMap.jpeg'),
-                                height: width * .22,
-                                width: width * .195,
-                                fit: BoxFit.contain),
-                          ),
+                          )
                         ],
                       ),
                     ),

@@ -28,7 +28,7 @@ class _AboutUsState extends State<AboutUs> {
         },
       ),
     )
-    ..loadRequest(Uri.parse('https://flutter.dev'));
+    ..loadRequest(Uri.parse('https://findkolkata.com/aboutUs.php'));
 
   @override
   Widget build(BuildContext context) {

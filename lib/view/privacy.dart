@@ -28,7 +28,7 @@ class _PrivacyState extends State<Privacy> {
         },
       ),
     )
-    ..loadRequest(Uri.parse('https://www.wikipedia.org/'));
+    ..loadRequest(Uri.parse('https://findkolkata.com/privacyPolicies.php'));
 
   @override
   Widget build(BuildContext context) {

@@ -15,6 +15,7 @@ class RoutesName {
   static const String home = 'home_sceen' ;
   static const String calling = 'Calling_Screen';
   static const String share = 'Share_Screen';
+  static const String just = 'Just_Screen';
 
 
 

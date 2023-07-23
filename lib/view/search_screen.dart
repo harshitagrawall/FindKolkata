@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/data/response/status.dart';
-import 'package:mvvm/utils/routes/routes_name.dart';
+import 'package:mvvm/view/details_screen.dart';
 import 'package:mvvm/view/home_screen.dart';
 import 'package:mvvm/view_model/drop_down_view_modal.dart';
 import 'package:mvvm/view_model/trending_view_modal.dart';
@@ -14,12 +14,13 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-
-  String? _selValue ;
+  String? _selValue;
 
   final TextEditingController _texfieldController = TextEditingController();
-  TrendingListViewViewModal trendingListViewViewModal = TrendingListViewViewModal();
-  DropDownListViewViewModal dropDownListViewViewModal = DropDownListViewViewModal();
+  TrendingListViewViewModal trendingListViewViewModal =
+      TrendingListViewViewModal();
+  DropDownListViewViewModal dropDownListViewViewModal =
+      DropDownListViewViewModal();
 
   @override
   void initState() {
@@ -91,7 +92,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           child: Text(valuee.dropDownList.message.toString()));
                     case Status.COMPLETED:
                       return DropdownButtonFormField<String>(
-                        value: _selValue!.isNotEmpty ? _selValue : null ,
+                        value: _selValue!.isNotEmpty ? _selValue : null,
                         onChanged: (val) {
                           setState(() {
                             _selValue = val as String;
@@ -209,80 +210,207 @@ class _SearchScreenState extends State<SearchScreen> {
                           physics: const NeverScrollableScrollPhysics(),
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
-                          itemCount: 2,
+                          itemCount: value.trendingList.data!.listings!.length,
                           itemBuilder: (context, index) {
                             return Padding(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: width * .05, vertical: 10),
-                              child: GestureDetector(
+                                  horizontal: width * .05),
+                              child: InkWell(
                                 onTap: () {
-                                  Navigator.pushNamed(context, RoutesName.home);
+                                  print(value
+                                      .trendingList.data!.listings![index].banner
+                                      .toString());
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => DetailsScreen(
+                                              id: value.trendingList.data!
+                                                  .listings![index].id
+                                                  .toString())));
                                 },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(),
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  height: width * .22,
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: width * .025, vertical: 5),
-                                    child: Row(
-                                      children: [
-                                        Image.network(
-                                           value.trendingList.data!.listings![index].banner.toString(),
-                                          errorBuilder:
-                                              (context, error, stack) {
-                                            return Icon(
-                                              Icons.error,
-                                              color: Colors.red,
-                                            );
-                                          },
-                                          height: width * .17,
-                                          width: width * .17,
-                                          fit: BoxFit.cover,
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                              left: width * .025),
-                                          child: Column(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      height: width * .50,
+                                      child: Column(
+                                        children: [
+                                          Row(
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                value.trendingList.data!
-                                                    .listings![index].name
-                                                    .toString(),
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                              Container(
+                                                child: Image.network(
+                                                  value.trendingList.data!
+                                                      .listings![index].banner
+                                                      .toString(),
+                                                  errorBuilder:
+                                                      (context, error, stack) {
+                                                    return Icon(
+                                                      Icons.error,
+                                                      color: Colors.red,
+                                                    );
+                                                  },
+                                                  height: width * .27,
+                                                  width: width * .17,
+                                                  fit: BoxFit.cover,
+                                                ),
                                               ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Text(
-                                                '5.0 stars',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Text(
-                                                value.trendingList.data!
-                                                    .listings![index].address
-                                                    .toString(),
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 10),
+                                                child: Container(
+                                                  width: width*.7,
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        value.trendingList.data!
+                                                            .listings![index].name
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                            FontWeight.bold),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 8,
+                                                      ),
+                                                      SizedBox(
+                                                        height: width * .06,
+                                                        width: width * .11,
+                                                        child: TextButton(
+                                                          style: ButtonStyle(
+                                                            backgroundColor:
+                                                            MaterialStateProperty
+                                                                .all<Color>(Colors
+                                                                .green
+                                                                .shade900),
+                                                            foregroundColor:
+                                                            MaterialStateProperty
+                                                                .all<Color>(
+                                                                Colors
+                                                                    .white),
+                                                          ),
+                                                          onPressed: () {},
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                            children: [
+                                                              Text(
+                                                                '5.0',
+                                                                style: TextStyle(
+                                                                    fontSize: 10,
+                                                                    fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                              ),
+                                                              Icon(
+                                                                Icons.star,
+                                                                size: 12,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 8,
+                                                      ),
+                                                      Text(
+                                                        value.trendingList.data!.listings![index].address.toString(),
+                                                        overflow: TextOverflow.ellipsis,
+                                                        style: TextStyle(
+                                                            color: Colors.grey,
+                                                            fontSize: 13),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      // Row(
+                                                      //   children: [
+                                                      //     Text(
+                                                      //       'Service Type:  ',
+                                                      //       style: TextStyle(
+                                                      //           fontSize: 12),
+                                                      //     ),
+                                                      //     Text('Home Cleaning',
+                                                      //         style: TextStyle(
+                                                      //             fontSize: 12,
+                                                      //             color:
+                                                      //                 Colors.grey)),
+                                                      //   ],
+                                                      // )
+                                                    ],
+                                                  ),
+                                                ),
+                                              )
                                             ],
                                           ),
-                                        )
-                                      ],
+                                          SizedBox(
+                                            height: width * .07,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              SizedBox(
+                                                width: width * .44,
+                                                height: width * .075,
+                                                child: TextButton(
+                                                  style: ButtonStyle(
+                                                    backgroundColor:
+                                                    MaterialStateProperty.all<
+                                                        Color>(Colors.blue),
+                                                    foregroundColor:
+                                                    MaterialStateProperty.all<
+                                                        Color>(Colors.white),
+                                                  ),
+                                                  onPressed: () {},
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                    children: [
+                                                      Icon(
+                                                        Icons.call,
+                                                        size: 17,
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                        const EdgeInsets.only(
+                                                            left: 5),
+                                                        child: Text('Call Now'),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: width * .44,
+                                                height: width * .075,
+                                                child: OutlinedButton(
+                                                  style: OutlinedButton.styleFrom(
+                                                    side: BorderSide(
+                                                        width: 1.0,
+                                                        color: Colors.blue),
+                                                  ),
+                                                  onPressed: () {},
+                                                  child: Text('Send Enquiry'),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: width * .07,
+                                          ),
+                                          Container(
+                                            height: .5,
+                                            width: double.infinity,
+                                            color: Colors.grey.shade300,
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
                               ),
                             );

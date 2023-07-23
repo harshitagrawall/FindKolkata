@@ -28,7 +28,7 @@ class _TandCState extends State<TandC> {
         },
       ),
     )
-    ..loadRequest(Uri.parse('https://www.quora.com/'));
+    ..loadRequest(Uri.parse('https://findkolkata.com/termsAndConditions.php'));
 
   @override
   Widget build(BuildContext context) {

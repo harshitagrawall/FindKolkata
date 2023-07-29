@@ -30,6 +30,7 @@ class Listings {
   String? whatsappNumber;
   String? address;
   String? banner;
+  String? rating;
 
   Listings(
       {this.id,
@@ -39,7 +40,8 @@ class Listings {
         this.contactNumber,
         this.whatsappNumber,
         this.address,
-        this.banner});
+        this.banner,
+        this.rating});
 
   Listings.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -50,6 +52,7 @@ class Listings {
     whatsappNumber = json['whatsappNumber'];
     address = json['address'];
     banner = json['banner'];
+    rating = json['rating'];
   }
 
   Map<String, dynamic> toJson() {
@@ -62,6 +65,7 @@ class Listings {
     data['whatsappNumber'] = this.whatsappNumber;
     data['address'] = this.address;
     data['banner'] = this.banner;
+    data['rating'] = this.rating;
     return data;
   }
 }

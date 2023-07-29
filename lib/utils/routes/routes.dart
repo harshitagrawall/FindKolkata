@@ -15,9 +15,11 @@ class Routes {
         return MaterialPageRoute(
             builder: (BuildContext context) => const SplashView());
 
+/*
       case RoutesName.login:
         return MaterialPageRoute(
             builder: (BuildContext context) => const LoginView());
+*/
 
       case RoutesName.navigation:
         return MaterialPageRoute(builder: (BuildContext context) => Home());
@@ -26,9 +28,9 @@ class Routes {
         return MaterialPageRoute(
             builder: (BuildContext context) => const SearchScreen());
 
-      case RoutesName.signUp:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const SignUpView());
+      // case RoutesName.signUp:
+      //   return MaterialPageRoute(
+      //       builder: (BuildContext context) => const SignUpView());
 
       case RoutesName.calling:
         return MaterialPageRoute(
